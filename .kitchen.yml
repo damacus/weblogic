@@ -1,0 +1,19 @@
+driver:
+  name: vagrant
+
+provisioner:
+  name: chef_zero
+
+platforms:
+  - name: oracle-6.5
+
+suites:
+  #
+  # default
+  #
+  - name: default
+    run_list:
+    - recipe[weblogic::default]
+    includes: [
+      'oracle-6.5'
+    ]
