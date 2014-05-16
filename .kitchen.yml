@@ -1,19 +1,25 @@
 driver:
   name: vagrant
+  customize:
+    memory: 2048
+    natdnshostresolver1: "on"
 
 provisioner:
   name: chef_zero
 
 platforms:
-  - name: oracle-6.5
+  - name: centos-6.5
 
 suites:
-  #
-  # default
-  #
   - name: default
     run_list:
     - recipe[weblogic::default]
-    includes: [
-      'oracle-6.5'
-    ]
+    attributes:
+      java:
+        jdk_version: "6"
+        oracle:
+          accept_oracle_download_terms: true
+        install_flavor: oracle
+      weblogic:
+        installer_download: "http://192.168.100.100:8000/wls_121200.jar"
+        installer_checksum: "e6efe85f3aec005ce037bd740f512e23c136635c63e20e02589ee0d0c50c065c"

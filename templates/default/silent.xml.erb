@@ -2,13 +2,13 @@
    <bea-installer> 
      <input-fields>
        <data-value name="BEAHOME" value="<%= node['weblogic']['beahome'] %>" />
-       <% unless node['weblogic']['ocm_proxy'].empty? -%>
+       <% unless node['weblogic']['ocm_proxy']['host'].nil? -%>
        <data-value name="OCM_PROXY_HOST" value="<%= node['weblogic']['ocm_proxy']['host'] %>" />
        <data-value name="OCM_PROXY_PORT" value="<%= node['weblogic']['ocm_proxy']['port'] %>" />
        <data-value name="OCM_PROXY_USER" value="<%= node['weblogic']['ocm_proxy']['user'] %>" />
        <data-value name="OCM_PROXY_PASSWORD" value="<%= node['weblogic']['ocm_proxy']['password'] %>" />
        <% end -%>
-       <% unless node['weblogic']['ocm_support'].empty? -%>
+       <% unless node['weblogic']['ocm_support']['email'].nil? -%>
        <data-value name="OCM_SUPPORT_EMAIL" value="<%= node['weblogic']['ocm_support']['email'] %>" />
        <data-value name="OCM_SUPPORT_PASSWORD" value="<%= node['weblogic']['ocm_support']['password'] %>" />
        <% end -%>
@@ -27,5 +27,6 @@
        <% end -%>
        <% unless node['weblogic']['bea_bundled_jvms'].empty? -%>
         <data-value name="BEA_BUNDLED_JVMS" value="<%= node['weblogic']['bea_bundled_jvms'].join('|') %>" />
+       <% end -%>
    </input-fields> 
 </bea-installer>

@@ -7,7 +7,7 @@ group :lint do
 end
 
 group :unit do
-  gem 'berkshelf',  '~> 3.0.0.beta6'
+  gem 'berkshelf',  '~> 3.1'
   gem 'chefspec',   '~> 3.4'
 end
 
@@ -38,5 +38,5 @@ group :development do
   gem 'rake'
   gem 'fauxhai'
   gem 'pry-nav'
-  gem 'nyan-cat-formatter'
+  gem 'stove'
 end
