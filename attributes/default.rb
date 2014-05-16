@@ -1,0 +1,15 @@
+default['weblogic']['beahome']                                 = '/opt/oracle_mw'
+default['weblogic']['ocm_proxy']['host']                       = nil
+default['weblogic']['ocm_proxy']['port']                       = nil
+default['weblogic']['ocm_proxy']['user']                       = nil
+default['weblogic']['ocm_proxy']['password']                   = nil
+default['weblogic']['ocm_support']['email']                    = nil
+default['weblogic']['ocm_support']['password']                 = nil
+default['weblogic']['wls_install_dir']                         = '/opt/oracle_mw/wlserver_12.1'
+default['weblogic']['ocp_install_dir']                         = nil
+default['weblogic']['component_paths']                         = []
+default['weblogic']['install_node_manager_service']            = 'no'
+default['weblogic']['nodemgr_port']                            = 5556
+default['weblogic']['install_shortcut_in_all_users_folders']   = true
+default['weblogic']['local_jvms']                              = []
+default['weblogic']['bea_bundled_jvms']                        = []

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+   <bea-installer> 
+     <input-fields>
+       <data-value name="BEAHOME" value="<%= node['weblogic']['beahome'] %>" />
+       <% unless node['weblogic']['ocm_proxy'].empty? -%>
+       <data-value name="OCM_PROXY_HOST" value="<%= node['weblogic']['ocm_proxy']['host'] %>" />
+       <data-value name="OCM_PROXY_PORT" value="<%= node['weblogic']['ocm_proxy']['port'] %>" />
+       <data-value name="OCM_PROXY_USER" value="<%= node['weblogic']['ocm_proxy']['user'] %>" />
+       <data-value name="OCM_PROXY_PASSWORD" value="<%= node['weblogic']['ocm_proxy']['password'] %>" />
+       <% end -%>
+       <% unless node['weblogic']['ocm_support'].empty? -%>
+       <data-value name="OCM_SUPPORT_EMAIL" value="<%= node['weblogic']['ocm_support']['email'] %>" />
+       <data-value name="OCM_SUPPORT_PASSWORD" value="<%= node['weblogic']['ocm_support']['password'] %>" />
+       <% end -%>
+       <data-value name="WLS_INSTALL_DIR" value="<%= node['weblogic']['wls_install_dir'] %>" />
+       <data-value name="OCP_INSTALL_DIR" value="<%= node['weblogic']['ocp_install_dir'] %>" />
+       <% unless node['weblogic']['component_paths'].empty? -%>
+       <data-value name="COMPONENT_PATHS" value="<%= node['weblogic']['component_paths'].join('|') %>" />
+       <% end -%>
+       <% if node['platform_family'] == 'windows' -%>
+       <data-value name="INSTALL_NODE_MANAGER_SERVICE" value="<%= node['weblogic']['install_node_manager_service'] %>" />
+       <% end -%>
+       <data-value name="NODEMGR_PORT" value="<%= node['weblogic']['nodemgr_port'] %>" />
+       <data-value name="INSTALL_SHORTCUT_IN_ALL_USERS_FOLDER" value="<%= node['weblogic']['install_shortcut_in_all_users_folders'] %>"/>
+       <% unless node['weblogic']['local_jvms'].empty? -%>
+       <data-value name="LOCAL_JVMS" value="<%= node['weblogic']['local_jvms'].join('|') %>" />
+       <% end -%>
+       <% unless node['weblogic']['bea_bundled_jvms'].empty? -%>
+        <data-value name="BEA_BUNDLED_JVMS" value="<%= node['weblogic']['bea_bundled_jvms'].join('|') %>" />
+   </input-fields> 
+</bea-installer>
