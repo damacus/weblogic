@@ -66,5 +66,6 @@ execute "Install Weblogic" do
   command "java -jar #{Chef::Config[:file_cache_path]}/wls_121200.jar -silent -silent_xml #{Chef::Config[:file_cache_path]}/silent.xml -responseFile #{Chef::Config[:file_cache_path]}/weblogic_install.rsp -Djava.security.egd=file:/dev/./urandom"
   user node['weblogic']['user']
   group node['weblogic']['group']
+  creates node['weblogic']['wls_install_dir']
   action :run
 end
