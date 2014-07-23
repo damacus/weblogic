@@ -5,67 +5,29 @@ This is a placeholder cookbook for the Weblogic cookbook
 
 Scope
 -----
-This cookbook is concerned with cross platform things.
-This cookbook does not do everything.
+This cookbook is for installing a basic Weblogic 12c standalone installation.
 
 Requirements
 ------------
 * Chef 11 or higher
 * Ruby 1.9 (preferably from the Chef full-stack installer)
-
-Resources / Providers
----------------------
-### crossplat_thing
-
-The `crossplat_thing` resource configures things.
-
-### Example
-
-    crossplat_thing 'default' do
-      action :create
-    end
+* Weblogic 12c installation JAR file (wls_121200.jar)
 
 Recipes
 -------
-### crossplat::default
+### weblogic::default
 
-This recipe calls a `crossplat_thing` resource, passing parameters
-from node attributes.
+This recipe installs Weblogic 12c using the generic silent installer.
 
 Usage
 -----
-The `crossplat::server` recipe and `crossplat_thing` resources are
-designed to do things.
 
-### run_list
-
-Include `'recipe[crossplat::default]'`
-
-### Wrapper cookbook
-
-    node.default['crossplat']['an_attribute'] = 'Chef'
-
-    include_recipe 'crossplat::default'
-
-    ruby_block 'wat' do
-      notifies :restart, crossplat_thing[wat]'
-    end
-
-### Used directly in a recipe
-
-    crossplat_thing 'wat' do
-      action :create
-    end
-
-    ruby_block 'wat' do
-      notifies :restart, crossplat_thing[wat]'
-    end
+### TODO
 
 Attributes
 ----------
 
-    default['crossplat']['resource_name'] = 'default'
-    default['crossplat']['an_attribute'] = 'chef'
+### TODO
 
 License & Authors
 -----------------

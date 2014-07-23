@@ -38,5 +38,4 @@ group :development do
   gem 'rake'
   gem 'fauxhai'
   gem 'pry-nav'
-  gem 'stove'
 end

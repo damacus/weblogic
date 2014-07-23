@@ -7,4 +7,16 @@ describe 'weblogic::default' do
     expect(chef_run).to create_template('/var/chef/cache/silent.xml')
   end
  
+  it 'creates the weblogic application user' do
+    expect(chef_run).to create_user('oracle')
+  end
+
+  it 'creates the weblogic application group' do
+    expect(chef_run).to create_group('oracle')
+  end
+
+  it 'creates the oraInst.loc file' do
+    expect(chef_run).to create_template('/etc/oraInst.loc')
+  end
+  
 end
