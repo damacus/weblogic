@@ -11,8 +11,12 @@ default['weblogic']['ocm_proxy']['user']                       = nil
 default['weblogic']['ocm_proxy']['password']                   = nil
 default['weblogic']['ocm_support']['email']                    = nil
 default['weblogic']['ocm_support']['password']                 = nil
-default['weblogic']['wls_install_dir']                         = '/home/oracle/oracle_mw/wlserver_12.1'
-default['weblogic']['ocp_install_dir']                         = '/home/oracle/oracle_mw/coherence_3.7'
+#default['weblogic']['wls_install_dir']                         = '/home/oracle/oracle_mw/wlserver_12.1'
+#default['weblogic']['ocp_install_dir']                         = '/home/oracle/oracle_mw/coherence_3.7'
+# for some reason the wls and ocp install_dir attribs aren't controlling the install https://github.com/micgo/weblogic/issues/2
+# Let's set these values to align with ground truth until we figure it out.
+default['weblogic']['wls_install_dir']                         = '/home/oracle/oracle_mw/wlserver'
+default['weblogic']['ocp_install_dir']                         = '/home/oracle/oracle_mw/coherence'
 default['weblogic']['component_paths']                         = []
 default['weblogic']['install_node_manager_service']            = 'no'
 default['weblogic']['nodemgr_port']                            = 5556
