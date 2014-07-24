@@ -1,6 +1,10 @@
 default['weblogic']['user']                                    = 'oracle'
 default['weblogic']['group']                                   = 'oracle'
 default['weblogic']['beahome']                                 = '/home/oracle/oracle_mw'
+default['weblogic']['domain_home']                             = '/home/oracle/oracle_mw/domain_home'
+default['weblogic']['domain_name']                             = 'example_name'
+default['weblogic']['admin_user']                              = 'root'
+default['weblogic']['admin_pass']                              = 'ChangeMe123'
 default['weblogic']['ocm_proxy']['host']                       = nil
 default['weblogic']['ocm_proxy']['port']                       = nil
 default['weblogic']['ocm_proxy']['user']                       = nil
