@@ -3,7 +3,9 @@ driver:
   customize:
     memory: 2048
     natdnshostresolver1: "on"
-
+  network:
+  - ["forwarded_port", {guest: 5556, host: 15556, auto_correct: true}]                                                                                                             
+  - ["forwarded_port", {guest: 7001, host: 17001, auto_correct: true}]  
 provisioner:
   name: chef_zero
 
@@ -14,6 +16,7 @@ suites:
   - name: default
     run_list:
     - recipe[weblogic::default]
+    - recipe[weblogic::create_domain]
     attributes:
       java:
         jdk_version: "6"

@@ -1,0 +1,126 @@
+#!/bin/sh
+#
+# /etc/rc.d/init.d/weblogic
+#
+# Starts single-server WebLogic Server
+#
+# chkconfig: 345 99 00
+# description: BEA/Oracle WebLogic Server (single node/instance)
+# cribbed from http://vega.sra-tohoku.co.jp/~kabe/vsd/rc_weblogic.html
+# $Id: rc_weblogic.html,v 1.2.1 2010-12-08 21:15:11+09 wfindley (prev. kabe) Exp $
+
+# reset LANG to get sane logs
+unset LANG; export LANG
+unset LC_ALL; export LC_ALL
+
+## get success, failure function
+. /etc/init.d/functions
+
+if [ -f /etc/sysconfig/weblogic ]; then
+    . /etc/sysconfig/weblogic
+fi
+
+# userid to run server as
+: ${wls_user:=<%= node['weblogic']['user'] %>}
+# the WebLogic domain to run
+: ${wls_domain_home:="<%= node['weblogic']['domain_home'] %>/<%= node['weblogic']['domain_name'] %>"}
+
+
+prog="WebLogic Server"
+: ${pidfile:="/var/run/weblogic.pid"}
+: ${wls_adminserver_log_dir:=${wls_domain_home}/servers/AdminServer}
+: ${wls_start_log:=${wls_adminserver_log_dir}/startWebLogic.log}
+#: ${wls_server_port:=7001}
+
+## Summary
+## Start:
+##  Background a startWebLogic.sh by the installation user, and
+##  wait for server port (typically 7001).
+## Stop:
+##  Kill all the JVM ("java") processes which are children of
+##  the running startWebLogic.sh .
+
+RETVAL=0
+case "$1" in
+  start)
+    ## Extract server port from init-info/tokenValue.properties:@SERVER_PORT=7001
+    if [ -z "${wls_server_port}" ]; then
+        wls_server_port=`sed -ne 's/^@SERVER_PORT=\([0-9][0-9]*\)/\1/p' ${wls_domain_home}/init-info/tokenValue.properties`
+    fi
+
+    if [ ! -x ${wls_domain_home}/bin/startWebLogic.sh ]; then
+        echo ${wls_domain_home}/bin/startWebLogic.sh not executable. >&2
+        exit 1
+    fi
+
+    if [ ! -d ${wls_adminserver_log_dir} ]; then
+        echo ${wls_adminserver_log_dir} not present, creating it. 
+        sudo -u ${wls_user} mkdir -p ${wls_adminserver_log_dir}
+    fi
+
+    ## startWebLogic.sh 
+    ## - should be started as installation user (ex.bea,weblogic,oracle)
+    ## - runs in foreground, so background here. Record pid
+        echo -n $"Starting $prog: "
+    sudo -u ${wls_user} ${wls_domain_home}/bin/startWebLogic.sh > ${wls_start_log} 2>&1 < /dev/null &
+    wls_pid=$!  ;# assume sudo exec(2)s, not fork
+
+    ## bail if startWebLogic exited immediately
+    sleep 1; kill -0 $wls_pid || exit 1
+    echo $wls_pid > ${pidfile}
+
+    ## wait for Administration Server port to open
+    if [ -n "${wls_server_port}" ]; then
+        RETVAL=1
+        for w in 1 3 2 1 1 1 5 5 5 10 10 1; do
+            if netstat -na | grep -l '[:.]'${wls_server_port}'[     ]' >/dev/null; then
+                RETVAL=0; break
+            fi
+            echo "Waiting WebLogic server port $wls_server_port for $w secs ..."
+            sleep $w
+        done
+        if [ "$RETVAL" -ne 0 ]; then
+            echo "WebLogic server port ${wls_server_port} did not open" >&2
+            failure $"weblogic startup"
+        fi
+    fi
+    touch /var/lock/subsys/weblogic
+    success $"weblogic startup"
+    ;;
+  stop)
+    ## Graceful shutdown by stopWebLogic.sh needs a password as
+    ## stopWebLogic.sh <username> <password> <admin_url>
+    ## "Shutting Down Servers with a Stop Script"
+    ## http://download.oracle.com/docs/cd/E13222_01/wls/docs103/server_start/overview.html#wp1072149
+    ## 
+    ## So, for automation, use immediate shutdown by killing JVMs
+    ## of the running startWebLogic.sh .
+    
+    ## Find pid of running startWebLogic.sh
+    if [ ! -r "${pidfile}" ]; then
+        echo "Cannot find $pidfile"; exit 1
+    fi
+    read wls_pid < ${pidfile}
+    test -z "$wls_pid" && exit 1
+
+    ## get children of $wls_pid.
+    ## procps ps can "ps --ppid $wls_pid" but not portable
+    wls_javapid=`ps ax -o pid= -o ppid= | awk -v ppid=${wls_pid} '$2 == ppid{print $1}'`
+    ## terminate child java
+    echo -n $"Stopping $prog: "
+    if kill $wls_javapid; then
+        rm -f /var/lock/subsys/weblogic
+        success $"weblogic shutdown"
+    fi
+    ;;
+  forcestop)
+    ## easy way: kill away all weblogic-ish java
+    echo -n $"Stopping $prog: "
+    kill `ps axww -o pid= -o args= | sed -ne '/java .* weblogic\.Server$/s/ .*//p'`
+    ;;
+  *)
+    echo $"Usage: $0 {start|stop|forcestop}"
+    exit 2
+esac
+
+exit $RETVAL
