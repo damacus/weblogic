@@ -1,30 +1,16 @@
 
-# domain_home_dirs = [
-#   "#{node['weblogic']['domain_home'}" ,
-#   "#{node['weblogic']['domain_home']}/#{node['weblogic']['domain_name']}",
-# ]
+domain_home_dirs = [ 
+  "#{node['weblogic']['domain_home']}" ,
+  "#{node['weblogic']['domain_home']}/#{node['weblogic']['domain_name']}",
+]
 
-# domain_home_dirs.each do |dirname|
-#   directory dirname do
-#     owner node['weblogic']['user'] 
-#     group node['weblogic']['group'] 
-#     mode 00755
-#     action :create
-#   end
-# end
-
-directory node['weblogic']['domain_home'] do
-  owner node['weblogic']['user'] 
-  group node['weblogic']['group'] 
-  mode 00755
-  action :create
-end
-
-directory "#{node['weblogic']['domain_home']}/#{node['weblogic']['domain_name']}" do
-  owner node['weblogic']['user'] 
-  group node['weblogic']['group'] 
-  mode 00755
-  action :create
+domain_home_dirs.each do |dirname|
+  directory dirname do
+    owner node['weblogic']['user'] 
+    group node['weblogic']['group'] 
+    mode 00755
+    action :create
+  end
 end
 
 template "#{node['weblogic']['domain_home']}/create_#{node[:weblogic][:domain_name]}_domain.py" do
