@@ -75,9 +75,10 @@ if node['weblogic']['version'] == '11g'
   #Change the directory ownership from root to oracle
   bash "chown" do
     code <<-EOH
-    chown -R #{node['weblogic']['user']}:#{node['weblogic']['group']} /home/oracle
+    chown -R #{node['weblogic']['user']}:#{node['weblogic']['group']} #{node['weblogic']['beahome']}
     EOH
   end
+end
 end
 
 if node['weblogic']['version'] == '12c'
