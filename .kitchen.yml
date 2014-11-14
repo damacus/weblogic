@@ -27,7 +27,7 @@ suites:
         version: '11g'
         install_init_d: false
         11g:
-          installer_download: 'http://botd-repo01.devop.vertafore.com/artifactory/third-party-local/weblogic/wls1035_generic.jar'
+          installer_download: 'http://host.com/to/wls1035_generic.jar'
   - name: default-12c
     run_list:
     - recipe[weblogic::default]
