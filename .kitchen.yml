@@ -1,7 +1,7 @@
 driver:
   name: vagrant
   customize:
-    memory: 2048
+    memory: 4096
     natdnshostresolver1: "on"
   network:
   - ["forwarded_port", {guest: 5556, host: 15556, auto_correct: true}]                                                                                                             
@@ -13,7 +13,7 @@ platforms:
   - name: centos-6.5
 
 suites:
-  - name: default
+  - name: default-11g
     run_list:
     - recipe[weblogic::default]
     - recipe[weblogic::create_domain]
@@ -24,5 +24,21 @@ suites:
           accept_oracle_download_terms: true
         install_flavor: oracle
       weblogic:
+        version: '11g'
+        install_init_d: false
+        11g:
+          installer_download: 'http://host.com/to/wls1035_generic.jar'
+  - name: default-12c
+    run_list:
+    - recipe[weblogic::default]
+    - recipe[weblogic::create_domain]
+    attributes:
+      java:
+        jdk_version: "6"
+        oracle:
+          accept_oracle_download_terms: true
+        install_flavor: oracle
+      weblogic:
+        version: '12c'
         installer_download: "http://192.168.100.100:8000/wls_121200.jar"
         installer_checksum: "e6efe85f3aec005ce037bd740f512e23c136635c63e20e02589ee0d0c50c065c"

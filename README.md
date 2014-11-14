@@ -5,7 +5,7 @@ This is a placeholder cookbook for the Weblogic cookbook
 
 Scope
 -----
-This cookbook is for installing a basic Weblogic 12c standalone installation.
+This cookbook is for installing a basic Weblogic 11g or 12c standalone installation.
 
 Requirements
 ------------
@@ -17,7 +17,7 @@ Recipes
 -------
 ### weblogic::default
 
-This recipe installs Weblogic 12c using the generic silent installer.
+This recipe installs Weblogic 11g or 12c using the generic silent installer.
 
 Usage
 -----
