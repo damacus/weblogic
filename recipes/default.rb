@@ -1,5 +1,5 @@
 #
-# Cookbook Name:: weblogic-11g
+# Cookbook Name:: weblogic
 # Recipe:: default
 #
 # Copyright 2009-2014 Chef Software, Inc
