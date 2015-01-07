@@ -25,6 +25,7 @@ default['weblogic']['local_jvms']                              = []
 default['weblogic']['bea_bundled_jvms']                        = []
 default['weblogic']['installer_download']                      = 'http://www.example.com/wls_121200.jar'
 default['weblogic']['installer_checksum']                      = 'e6efe85f3aec005ce037bd740f512e23c136635c63e20e02589ee0d0c50c065c'
+default['weblogic']['installer_additional_options']            = '' # Pass additional options to weblogic installer here. Available options at: http://docs.oracle.com/middleware/1212/core/OUIRF/silent.htm#OUIRF334
 default['weblogic']['install_type']                            = 'WebLogic Server'
 default['oui']['inventory_loc']                                = '/home/oracle/orainventory'
 default['oui']['install_group']                                = 'oracle'
