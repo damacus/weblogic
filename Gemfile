@@ -1,5 +1,7 @@
 source 'https://rubygems.org'
 
+gem 'chef', '~> 11.0'
+
 group :lint do
   gem 'foodcritic', '~> 3.0'
   gem 'rubocop', '~> 0.18'
