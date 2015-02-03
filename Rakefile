@@ -8,7 +8,7 @@ end
 
 desc "Run ChefSpec examples - junit output"
 RSpec::Core::RakeTask.new(:spec) do |t|
-  t.rspec_opts = %w[-f JUnit -o results.xml]
+  t.rspec_opts = %w[-r yarjuf -f JUnit -o results.xml]
 end
 
 desc "Run ChefSpec examples - console"
