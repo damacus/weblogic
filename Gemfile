@@ -21,13 +21,6 @@ group :kitchen_vagrant do
   gem 'kitchen-vagrant', '~> 0.11'
 end
 
-group :kitchen_cloud do
-  gem 'kitchen-digitalocean'
-  gem 'kitchen-ec2'
-  gem 'kitchen-joyent'
-  gem 'kitchen-gce'
-end
-
 group :development do
   gem 'ruby_gntp'
   gem 'growl'
