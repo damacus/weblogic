@@ -79,7 +79,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     }
 
     chef.run_list = [
-        "recipe[weblogic::default]"
+        "recipe[weblogic::default]",
         "recipe[weblogic::create_domain]"
     ]
   end
